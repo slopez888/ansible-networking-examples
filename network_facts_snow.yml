@@ -1,0 +1,53 @@
+---
+- name: create ticket with notes
+  hosts: ios
+  gather_facts: no
+  connection: network_cli
+  roles:
+	- parse_genie
+
+
+  tasks:
+
+  - name: include vars
+    include_vars: incident_vars.yml
+
+  - name: show version
+    ios_command:
+      commands:
+        - show version
+    register: version
+
+  - name: Set Fact Genie Filter
+    set_fact:
+      pyats_version: "{{ version['stdout'][0] | parse_genie(command='show version', os='ios') }}"
+
+# Example 1 showing version information
+  - name: Debug Pyats facts
+    debug:
+      var: pyats_version.version.version
+
+# Example 2 showing uptime
+  - name: Debug Pyats facts
+    debug:
+      var: pyats_version.version.uptime
+
+  - name: Create an incident
+    snow_record:
+      state: present
+      table: incident
+      username: "{{ sn_username }}"
+      password: "{{ sn_password }}"
+      instance: "{{ sn_instance }}"
+      data:
+        priority: "{{ sn_priority}}"
+        u_device_up_time: "{{ pyats_version.version.uptime }}"
+        u_ios_version: "{{ pyats_version.version.version }}"
+        u_hostname: "{{ pyats_version.version.hostname }}"
+        u_platform: "{{ pyats_version.version.platform }}"
+        u_device_type: "{{ pyats_version.version.rtr_type }}"
+        u_serial_number: "{{ pyats_version.version.chassis_sn }}"
+        u_last_reload_reason: "{{ pyats_version.version.last_reload_reason }}"
+        short_description: "This ticket was created by Ansible"
+
+  - debug: var=new_incident.record.number
