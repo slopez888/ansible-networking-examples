@@ -49,6 +49,8 @@
         u_device_type: "{{ pyats_version.version.rtr_type }}"
         u_serial_number: "{{ pyats_version.version.chassis_sn }}"
         u_last_reload_reason: "{{ pyats_version.version.last_reload_reason }}"
+        u_disk_size: "{{ pyats_version.version.disks.bootflash.disk_size }}"
+        u_memory_size: "{{ pyats_version.version.mem_size.physical }}"
         short_description: "This ticket was created by Ansible Tower"
         caller_id: "System Administrator"
         
