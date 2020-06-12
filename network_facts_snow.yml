@@ -1,6 +1,6 @@
 ---
 - name: create ticket with notes
-  hosts: ios
+  hosts: all
   gather_facts: no
   connection: network_cli
   roles:
