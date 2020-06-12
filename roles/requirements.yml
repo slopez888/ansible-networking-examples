@@ -1,0 +1,5 @@
+---
+- name: parse_genie
+  src: https://github.com/clay584/parse_genie
+  scm: git
+  version: master
