@@ -41,7 +41,7 @@
       instance: "{{ sn_instance }}"
       data:
         priority: "{{ sn_priority}}"
-        u_device_up_time: "{{ pyats_version.version.uptime }}"
+        u_device_uptime: "{{ pyats_version.version.uptime }}"
         u_os_type: "{{ pyats_version.version.os }}"
         u_os_version: "{{ pyats_version.version.version }}"
         u_hostname: "{{ pyats_version.version.hostname }}"
