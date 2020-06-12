@@ -9,8 +9,8 @@
 
   tasks:
 
-  - name: include vars
-    include_vars: incident_vars.yml
+  #- name: include vars
+  #  include_vars: incident_vars.yml
 
   - name: show version
     ios_command:
