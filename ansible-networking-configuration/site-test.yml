@@ -1,0 +1,24 @@
+---
+- name: parse through network device names
+  hosts: network
+  gather_facts: no
+  vars:
+
+  tasks:
+    - name: parse name
+      set_fact: 
+        section1: "{{ inventory_hostname_short[:3] }}"
+        section2: "{{ inventory_hostname_short[3:6] }}"
+
+
+    - name: print out parsed sections
+      debug:
+        msg: |
+          Location is {{ section1.split('\n') }} \n
+          Network role type is {{ section2.split('\n') }}
+
+    - name: conditional test
+      debug: 
+        msg: This is a backbone device in found in {{ inventory_hostname_short[:3] }}
+      when: inventory_hostname_short[:3] == 'eor' and inventory_hostname_short[3:6] == 'cbb'
+      

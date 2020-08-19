@@ -1,0 +1,31 @@
+---
+- name: apply backbone role based configuation template
+  hosts: Orlando, backbone
+  gather_facts: no
+
+  tasks:
+    - name: backbone role
+      include_role: 
+        name: backbone
+      when: inventory_hostname_short[:3] == 'eorcbb-orl' or 'eitcbb-eit'
+
+- name: apply network services role based configuation template
+  hosts: Orlando, network_services
+  gather_facts: no
+
+  tasks:
+    - name: network services role
+      include_role:
+        name: network_services
+      when: inventory_hostname_short[:3] == 'eorcbb-orl' or 'eitcbb-eit'
+
+- name: apply security role based configuation template
+  hosts: Perimiter_Security
+  gather_facts: no
+
+  tasks:
+    - name: perimeter security role
+      include_role: 
+        name: perim_security
+      when: inventory_hostname_short[:3] == 'eorcbb-orl' or 'eitcbb-eit'
+
